@@ -7,23 +7,24 @@
       </div>
     </section>
     <div class="container">
-      <form @submit.prevent="onSubmit">
+      <form @submit.prevent="onSubmit" novalidate="true">
         <!-- Display error message -->
-        <p v-if="errors.length">
+        <p v-if="errors.length" class="help is-danger">
           <b>Please correct the following error(s):</b>
           <ul>
             <li v-for="error in errors" :key="error">{{error }}</li>
           </ul>
         </p>
         <!-- Form -->
-          <div class="field">
-            <label class="label" for="firstName">First Name</label>
-            <input class="input"
-                id="firstName"
-                v-model="firstName"
-                type="text"
-                name="firstName"
-            >
+        <div class="field">
+          <label class="label" for="firstName">First Name</label>
+          <input class="input"
+            id="firstName"
+            v-model="firstName"
+            type="text"
+            name="firstName"
+          >
+          <FormError :errors="errors.firstName" />
           </div>
           <div class="field">
             <label class="label" for="lastName">Last Name</label>
@@ -33,6 +34,7 @@
                 type="text"
                 name="lastName"
             >
+            <FormError :errors="errors.lastName" />
           </div>
         <div class="field">
           <label class="label" for="age">Age</label>
@@ -43,6 +45,7 @@
               name="age"
               min="0"
           >
+          <FormError :errors="errors.age" />
         </div>
         <div class="field">
           <label class="label" for="email">Email</label>
@@ -52,11 +55,12 @@
               type="email"
               name="email"
           >
+          <FormError :errors="errors.email" />
         </div>
         <div class="field">
           <label class="label" for="religion">Religion</label>
           <select
-            class="select"
+            class="select is-medium is-primary"
               id="religion"
               v-model="religion"
               name="religion"
@@ -64,6 +68,7 @@
             <option v-for="option in options" :key="option.id" :value="option.value"> {{ option.text }} 
             </option>
           </select>
+          <FormError :errors="errors.religion" />
         </div>
         <button class="button is-black">
           Submit
@@ -74,11 +79,22 @@
 </template>
 
 <script>
+import FormError from "@/components/FormError";
+
 export default {
   name: "Vanilla",
+  components:{
+    FormError
+  },
   data() {
     return {
-      errors:[],
+      errors:{
+        firstName:[],
+        lastName:[],
+        age:[],
+        email:[],
+        religion:[]
+      },
       options: [{id:1, text:"Christian"}, {id:2, text:"Muslim"}, {id:3, text:"Hindu"}, {id:5, text:"Buddhist"}, {id:6, text:"Jew"}, {id:7, text:"Other"}],
       firstName: null,
       lastName: null,
@@ -89,11 +105,38 @@ export default {
   },
   methods:{
     onSubmit() {
-      console.log(this.firstName);
-      console.log(this.lastName);
-      console.log(this.age);
-      console.log(this.email);
-      console.log(this.religion);
+      return this.checkForm();
+    }, 
+    checkForm() {
+      this.resetErrors();
+      if (!this.firstName) {
+        this.errors.firstName.push("First Name required")
+      }
+      if (!this.lastName) {
+        this.errors.lastName.push("Last Name required")
+      }
+      if (!this.age) {
+        this.errors.age.push("Age required")
+      }
+      if (!this.email) {
+        this.errors.email.push("Email required")
+      }
+      if (!this.validEmail(this.email)) {
+        this.errors.email.push("Email not valid")
+      }
+    },
+    resetErrors() {
+      this.errors = { 
+        "firstName":[],
+        "lastName":[],
+        "age":[],
+        "email":[],
+        "religion":[]
+      }
+    },
+    validEmail: function (email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
     }
   }
 };

@@ -12,7 +12,7 @@
           <label class="label" for="firstName">First Name</label>
           <input class="input"
             id="firstName"
-            v-model="firstName"
+            v-model.trim="firstName"
             type="text"
             name="firstName"
           >
@@ -22,7 +22,7 @@
             <label class="label" for="lastName">Last Name</label>
             <input class="input"
                 id="lastName"
-                v-model="lastName"
+                v-model.trim="lastName"
                 type="text"
                 name="lastName"
             >
@@ -40,7 +40,7 @@
           <label class="label" for="age">Age</label>
           <input class="input"
               id="age"
-              v-model="age"
+              v-model.trim="age"
               type="number"
               name="age"
               min="0"
@@ -51,7 +51,7 @@
           <label class="label" for="email">Email</label>
           <input class="input"
               id="email"
-              v-model="email"
+              v-model.trim="email"
               type="email"
               name="email"
           >
@@ -112,6 +112,8 @@ export default {
       this.resetErrors();
       if (!this.firstName) {
         this.errors.firstName.push("First Name required")
+      } else if (this.firstName.length <= 3) {
+        this.errors.firstName.push("First Name must have at least 3 letters")
       }
       if (!this.lastName) {
         this.errors.lastName.push("Last Name required")
@@ -121,8 +123,7 @@ export default {
       }
       if (!this.email) {
         this.errors.email.push("Email required")
-      }
-      if (!this.validEmail(this.email)) {
+      } else if (!this.validEmail(this.email)) {
         this.errors.email.push("Email not valid")
       }
     },

@@ -8,14 +8,6 @@
     </section>
     <div class="container">
       <form @submit.prevent="onSubmit" novalidate="true">
-        <!-- Display error message -->
-        <p v-if="errors.length" class="help is-danger">
-          <b>Please correct the following error(s):</b>
-          <ul>
-            <li v-for="error in errors" :key="error">{{error }}</li>
-          </ul>
-        </p>
-        <!-- Form -->
         <div class="field">
           <label class="label" for="firstName">First Name</label>
           <input class="input"
@@ -35,6 +27,14 @@
                 name="lastName"
             >
             <FormError :errors="errors.lastName" />
+          </div>
+          <div class="field">
+            <label class="radio">
+              <input type="radio" name="sex">
+            Female</label>
+            <label class="radio">
+              <input type="radio" name="sex">
+            Male</label>
           </div>
         <div class="field">
           <label class="label" for="age">Age</label>
@@ -98,6 +98,7 @@ export default {
       options: [{id:1, text:"Christian"}, {id:2, text:"Muslim"}, {id:3, text:"Hindu"}, {id:5, text:"Buddhist"}, {id:6, text:"Jew"}, {id:7, text:"Other"}],
       firstName: null,
       lastName: null,
+      sex: null,
       age: null,
       email: null,
       religion: null

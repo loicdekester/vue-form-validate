@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="hero">
+    <section class="hero is-primary">
       <div class="hero-body">
         <h1 class="title">Vuelidate</h1>
         <h2 class="subtitle">This is the form with validation using Vuelidate Library</h2>
@@ -81,7 +81,7 @@
             </option>
           </select>
         </div>
-        <button class="button is-black">
+        <button class="button is-primary">
           Submit
         </button>
       </form>

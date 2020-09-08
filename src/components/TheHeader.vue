@@ -2,7 +2,7 @@
   <nav class="navbar is-black">
     <div class="navbar-menu">
       <div class="navbar-start">
-        <router-link to="/home" class="navbar-item">
+        <router-link to="/" class="navbar-item">
           Home
         </router-link>
         <router-link to="/vanilla" class="navbar-item">
